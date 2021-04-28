@@ -1,0 +1,250 @@
+
+2020-14457/RER - Informatica e statistica
+
+CONTENUTI:
+Algoritmi: procedimento di risoluzione di un problema e implementazione mediante programmazione e linguaggio macchina. Modelli matematici di studio di un algoritmo: sintesi e analisi. Complessità computazionale di un algoritmo.
+
+Rappresentazione statistica dei dati: tabelle e grafici. Indici centrali di una distribuzione (media, moda, mediana). Indici di posizione e di dispersione. Interpolazione statistica, metodo dei minimi quadrati, applicazione con funzione lineare. Calcolo delle probabilità. Strumenti statistici (fogli, diagrammi e carte di controllo per variabili e per attributi) e manageriali (problemi, decisioni, attività) di controllo del processo: limiti di controllo, dimensione campionaria, frequenza di campionamento.
+
+Materiali:
+
+Statistica
+https://drive.google.com/file/d/1pyOWX699OPX0xDkqOM9R5hvzKENKC3rC/view?usp=sharing
+
+Javascript:
+https://drive.google.com/file/d/12Hn4H57WvcbY5_AXCd0y29hJOgZOOuWk/view?usp=sharing
+
+..............................................................
+2021-01-12
+1. Introduzione (macchinetta)
+..............................................................
+
+Per scomporre un programma che è gia' sviluppato, vanno analizzate quelle porzioni di codice che hanno funzionalità "sintetizzabili".
+Ad esempio un blocco di input utente potrebbe essere visto come una 'cosa' al termine della quale il programmatore deve avere a disposizione:
+- l'importo (gli euro)
+- la scelta (il codice)
+- il fatto che l'utente voglia smettere (potrebbe coincidere con avere a disposizione importo=0)
+
+Allora si riflette se è possibile scrivere UNA PROCEDURA che RESTITUISCA proprio quelle TRE cose
+(Fatemi qualche cenno con la testa se riuscite a seguire)
+
+Quindi bisogna riflettere su COSA questa procedura NECESSITA (per svolgere il suo compito) e COSA deve RESTITUIRE. Vediamo.
+
+COSA NECESSITA:
+A prima vista alla procedura servono DUE stringhe (quelle che devono descrivere le cose che l'utente deve fare, le istruzioni per l'input). Potrei anche decidere di inserire queste stringhe DIRETTAMENTE DENTRO la PROCEDURA (senza quindi passargliele).
+
+COSA DEVE RESTITUIRE:
+Qui non abbiamo molto margine: deve restituire necessariamente i dati per i calcoli, cioè:
+  importo
+  scelta
+
+Ora dobbiamo formalizzare la procedura, se siete d'accordo, senno' fatemi qualche domanda (io sento)...
+
+1. NOME della procedura
+Non ci sono regole restrittive (solo senza spazi e caratteri speciali). Deve ricordare ciò per cui esiste e fa, quindi una cosa come InputMacchinetta()
+Poi, se vi ricordate, va sempre specificato il tipo di ritorno, che, se ancora non abbiamo le idee chiare, possiamo impostare come void.
+Vado.
+DOVE scriviamo la procedura?
+In prima battuta, le procedure si scrivono SOPRA al main(), subito dopo le inclusioni iniziali (#include) e dopo EVENTUALI variabili globali (che noi ancora non abbiamo visto, ma che avete visto con Var8)
+
+Ora sto andando per gradi. E' ovvio che copieremo il codice MA dovremo fare degli adattamenti cruciali.
+Infatti manca la parte di progettazione più IMPORTANTE (per la procedura Inputmacchinetta()): 
+decidere la lista dei parametri, quanti, quali e di che tipo.
+-------------------------------------------------------------
+
+2. Decidere i parametri
+Per ora lasciamo perdere COSA NECESSITA (le due stringhe, che metteremo direttamente nel codice della procedura, cioè NON gliele passeremo)
+Vediamo cosa DEVE restituirci: importo e codice (e il fatto se l'utente voglia TERMINARE)
+L'importo è sicuramente un valore con la virgola (float), mentre il codice un intero (integer).
+Ora va decisa la modalità: per valore o per indirizzo (decisione che va presa per TUTTI i parametri)
+la domanda: l'importo che verrà preso dalla procedura DEVE essere restituito al chiamante (della procedura)? CERTO. Allora è un passaggio per indirizzo.
+
+Per completare una disanima decente del linguaggio C faremo ancora:
+- Scomporre programmi su più files (librerie, per la modularizzazione e il riutilizzo)
+- Evitare l'uso delle variabili globali (statiche)
+- Imparare ad usare i tipi definiti dall'utente (UDT) o strutture
+
+..............................................................
+2021-01-19
+2. Progetti, scope e lifetime
+..............................................................
+
+Quando una variabile (un simbolo) è dichiarata FUORI da ogni blocco di graffe e in TESTA al modulo (file sorgente), allora è detta STATICA; quando una variabile è invece dichiarata DENTRO un blocco di graffe è detta LOCALE (automatica, ha 'scope' solo nel blocco di graffe in cui è dichiarata ed è valida solo lì dentro).
+Infine la variabile GLOBALE è sia STATICA che pienamente visibile (cioè in Scope per TUTTI i moduli).
+
+Le variabili STATICHE sono VISTE da TUTTO il modulo e sono VALIDE per TUTTO il runtime.
+- La visibilità (di un simbolo) è detta SCOPE.
+- La validità (di un simbolo) è detta LIFETIME: è quella parte del runtime in cui quel simbolo ha un valore certo.
+
+ATTENZIONE:
+- Esiste una parola chiave del C che AUMENTA lo scope delle variabili STATICHE: extern
+Se voglio che una variabile statica sia VISTA in un modulo DIVERSO da quello in cui è stata dichiarata, devo riprendere la dichiarazione originale, spostarla nel modulo interessato (sempre in testa) e preporre la parola chiave extern.
+- Esiste una parola chiave del C che AUMENTA il lifetime delle variabili LOCALI: static
+
+In generale, per scomporre il codice di un programma/sorgente:
+
+1. Trasformare in procedura tutte le parti 'funzionali' del sorgente.
+2. Creare un nuovo sorgente .c in cui spostare le procedure (e aggiungerlo al progetto).
+3. Creare il file con le 'istruzioni d'uso', ovvero un file d'intestazione .h (e aggiungerlo al progetto)
+4. Nel file d'intestazione .h aggiungere TUTTI i prototipi delle procedure che saranno utilizzate da altri moduli .c (es. dal main.c). Ricordare di mettere il ; alla fine di ogni prototipo.
+5. Aggiungere in ogni modulo .c che lo richieda l'inclusione del file delle 'istruzioni d'uso', cioè il file .h (con #include "nomefile.h")
+
+Esercizio.
+Scrivere un progetto con Code::Block in C (di nome kcal.cbp) che, preso in input il peso di una persona, restituisca sullo schermo il fabbisogno di calorie giornaliero (k/cal).
+Layout:
+c:\>
+Inserire il peso in Kg. : 80
+Il fabbisogno giornaliero: 2018 k/kal
+
+Inserire il peso in Kg. : 60
+Il fabbisogno giornaliero: 1100 k/kal
+
+Inserire il peso in Kg. : 0
+c:\>
+
+Dopo averlo risolto su un unico modulo main.c, scomporlo in procedura/e e ottenere i sorgenti:
+main.c
+kcal.c
+kcal.h
+
+
+..............................................................
+2021-01-21
+3. Strutture dati
+..............................................................
+
+Aggiornare il progetto Kcalorie aggiungendo l'input del sesso (M o F).
+
+Quando le informazioni di un certo carattere diventano numerose, invece di dichiarare ogni singola informazione, il programmatore può riunire tutte le informazioni in una UNICA variabile, detta struttura dati (UDT User Defined Type).
+Riunire molte informazioni su una singola variabile (una variabile UDT) da molti vantaggi, sia in chiamata di procedura, sia soprattutto per affrontare i linguaggi a oggetti, dove le strutture dati si evolvono in Classi.
+
+  Kilocalorie.zip   (variabili semplici)
+01Kilocalorie.zip   (struttura, ma le chiamate semplici)
+02Kilocalorie.zip   (struttura, chiamate con struttura)
+
+Esercizio
+Dal vecchio Kilocalorie, aggiornare SOLO l'input del peso e farlo controllato, solo valori da 5 a 250 Kg e solo numerici.
+
+Layout:
+Inserire il peso: 1
+Inserire il peso: 251
+Inserire il peso: aa
+Inserire il peso: 56
+.
+.
+.
+
+Regola del C: Un array si passa SEMPRE per indirizzo
+Regola del C: Il nome di un array ne è l'indirizzo (del primo elemento)
+
+..............................................................
+2021-01-25
+4. HTML + Javascript
+..............................................................
+
+Mentre diamo una occhiata a 09 Macchinetta, dovreste scaricare Notepad++.
+
+Il settore WEB è uno dei tre classici per il programmatore:
+- Programmazione Desktop (linguaggio C, Linguaggio Visual Studio: C#, Visual Basic, ..., Java, ..., Phyton,... )
+- Programmazione Web (HTML. Linguaggi Lato Client: CSS, Javascript,... e Linguaggi Lato Server: PHP, ASP, ...)
+- Programmazione Mobile (...)
+
+Programmazione Web
+------------------
+I linguaggi per la programmazione Web (Lato Client) sono tradotti dal browser (con la tecnica dell'interpretazione): Manca la COMPILAZIONE.
+Mancando la compilazione viene eliminato il problema della compatibilità (binaria), almeno sul lato Client.
+
+Modello Client/Server per Internet (TCP/IP)
+La comunicazione può essere organizzata in 2 modi:
+- Peer-to-peer (P2P)
+- Client/Server (C/S)
+
+Un Browser e' il lato Client di una comunicazione sul Web (TCP/IP).
+Un lato Client CHIEDE le informazioni a un'altra applicazione (che è in grado di fornirle): lato Server del Web.
+Se i programmi Browser (client) sono Chrome, Firefox, Safari, Edge, Opera, ....
+i programmi Server Web (server) sono ancora meno: IIS (Microsoft) e Apache (sw libero)
+
+Per cominciare a scrivere codice (sorgente) per il Web, si può sfruttare il fatto che un Browser è in grado di farsi consegnare le 'pagine' anche dall'Hard Disk locale (e non solo da un programma Web Server posto su una macchina remota nel mondo).
+Per 'pagina' si intende un vero e proprio sorgente (un file testo), scritto con le regole di un preciso linguaggio.
+Il primo linguaggio per il Web sarà HTML, che ha anche lo scopo di fare da 'contenitore' per altri linguaggi (es. Javascript e CSS)
+
+...............................
+02.html
+Scrivere un sorgente HTML che, dopo una intestazione (<h1> <h2> ...) blu e centrata, un pò di testo (<p>) giustificato, inserisca sotto una immagine centrata.
+
+...............................
+03.html
+Scrivere un sorgente HTML che, a partire da quello precedente, consenta di 'linkare' una parola del testo al corrispondente in Wikipedia, e l'immagine alla prima pagina web (01.html).
+
+-------------------------------------------------------
+Il linguaggio C è tipicamente IMPERATIVO.
+Molti linguaggi, invece, sono GUIDATI DAGLI EVENTI.
+
+..............................................................
+2021-01-26
+5. Javascript
+..............................................................
+a. Su 05.html trovare il modo per colorare di rosso il risultato.
+b. Su 05.html trovare il modo per aumentare il font del risultato.
+c. Su 05.html trovare il modo di effettuare il link alla pagina Kat di Wikipedia cliccando sull'immagine.
+Chiamate il nuovo file 06.html
+
+...............................
+07.html
+Arricchire 06.html facendo selezionare il sesso (con un combobox, cioè un select per javascript)
+
+...............................
+08.html
+Aggiustare il codice nel caso di errori (resettare l'output)
+Aggiustare il codice nel caso di variazione dell'input (resettare l'output)
+
+...............................
+macchinetta.html
+Scrivere in HTML e Javascript una pagina che consente di selezionare una merendina dalla sua immagine 128x128.
+Le merendine: Cipster, ZenMix, Ringo, Lyon, KitKat, TUC, Kinder Bueno
+Una volta selezionata con il mouse, riportarne una copia più piccola in fondo alla pagina.
+
+RIEPILOGO JAVASCRIPT
+
+Linguaggio web lato client, interpretato, a oggetti, guidato dagli eventi.
+- Codice in HTML
+- Codice nella PAGINA (in testa o in coda)
+- Codice ESTERNO (su file .js, così da fare librerie come in C)
+- Codice REMOTO (scaricato al volo da siti specializzati, per usare librerie di terze parti tipo jQuery)
+
+
+Quando lo desiderate, mi contattate e facciamo ripassi generali.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

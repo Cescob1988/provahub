@@ -1,0 +1,48 @@
+Quante possibilità ci sono che due persone compiano gli anno nello stesso giorno, prendendo in esmepio una stanza
+con trenta persona.
+
+Intuitivamente potrebbe sembrare che ci sian un basso numero di probabilità, ma non è così.
+
+Per trovare il risulatato  sarà necessario eseguire un calcolo fattoriale, ovvero: ci sono 364 p
+possibilità su 365 che due persona in una stanza compiano gli anni nello stesso giorno e 363 su 365 se si considera
+un terzo elemento e così via (per comodità non sto considerando gli anni bisestili). Dovremo quidni continuare a diminiuire di uno 
+sino a togliere -30 dalla totalità dei giorni dell'anno eseguenfo così una operazione di tipo fattoriale.
+
+Perchè questo è detto il paradosso del complenno?
+
+Noi intuiamo che serva un gruppo numeroso di persone per aumentate molto la probabilità
+ma non è di fatto così.
+
+
+
+COME FARE A SEMPLIFICARE TUTTO QUESTO?
+
+Semplice!! 
+
+Prendiamo un numero piu' piccolo di persone ovvero (A B C D) e accoppiamole
+in modo da creare tutte le coppie possibili
+
+(A,B) (B,C)
+(A,C) (B,C)
+(A,D) (C,D)
+
+ECCO IL CALCOLO 
+
+  
+4 x 3(4-1) / 2 = 6
+
+CONSIDERIAMO ORA 50 PERSONE
+
+50 persone 1225 possibili coppie
+
+vediamo così che è facile creare un grande numero aumentando le probabilità anche con 30 persone
+
+30 * 29 / 2 = 135 possibili coppie (la probilità è alta considerati i giorni dell'anno)
+
+Per avere il 100% delle probabilità avremmo bisogno di 366 persone, 
+non esistono 366 giorni in un anno!!!
+
+
+
+
+

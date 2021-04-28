@@ -1,0 +1,22 @@
+Consegnare tre file .zip
+
+1. c.zip
+Contiene la cartella di un progetto Code::Blocks che, preso in ingresso il modello di vettura, e il n. di mesi (max 24), restituisca la rata mensile maggiorando l'importo del 10%.
+I modelli: Ford Fiesta, 12000Euro; Ford CMax, 16000Euro; Ford Puma, 20000Euro; Ford Kuga, 30000Euro
+Fare un progetto multifile (main.c, procedure.c, procedure.h)
+
+2. j.zip
+Contiene la cartella che riporta i files necessari per realizzare il problema dell'esercizio 1. in HTML e Javascript, ma facendo selezionare il modello graficamente.
+
+3. s.zip
+Contiene un file .docx che riporta la soluzione alla seguente domanda:
+“Che probabilità c’è che due persone in un gruppo di 30 persone compino gli anni lo stesso giorno?”
+Usare la parte finale del mio testo “Corso calcolo delle probabilità” (Calcolo combinatorio) e Internet. Mostrare e motivare i passaggi dei calcoli.
+
+Consegnare entro il 15 febbraio come allegato a:
+A:       paolo.ollari@itis.pr.it
+Oggetto: CISITA fabbrica2021 Verifica finale
+Corpo:   Cognome e Nome
+
+
+
